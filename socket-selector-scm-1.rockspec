@@ -9,8 +9,19 @@ description = {
    homepage = "*** please enter a project homepage ***",
    license = "*** please specify a license ***"
 }
-dependencies = {}
+dependencies = {
+   "lua >= 5.1",
+   "log4lua >= 1.0.0-1"
+}
 build = {
    type = "builtin",
-   modules = {}
+   modules = {
+      ['selector'] = "src/selector.lua",
+
+      ['selector.ngx'] = "src/socket/ngx.lua",
+      ['selector.cqueues'] = "src/socket/cqueues.lua",
+      ['selector.lua'] = "src/socket/lua.lua",
+      
+      ['selector.env'] = "src/environment.lua"
+   }
 }
