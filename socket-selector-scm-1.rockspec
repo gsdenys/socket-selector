@@ -11,7 +11,7 @@ description = {
 }
 dependencies = {
    "lua >= 5.1",
-   "log4lua >= 1.0.0-1"
+   "power-table >= 1.0.1-1",
 }
 build = {
    type = "builtin",

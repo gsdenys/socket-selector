@@ -1,0 +1,9 @@
+{
+    "Lua.diagnostics.globals": [
+        "version",
+        "source",
+        "description",
+        "dependencies",
+        "build"
+    ]
+}
