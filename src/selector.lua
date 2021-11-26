@@ -4,12 +4,19 @@ local types = require "sselector.types"
 local assertion = require "sselector.utils.assertion"
 local messages = require "sselector.utils.messages"
 
+-- the socket selector object
 local selector = table({})
 
+-- the name of possibles types
 local typename = {LUA = "LUA", CQUEUES = "CQUEUES", NGINX = "NGINX"}
 
+-- the default environment variable that overwrite the selector
 local defaultenv = "SOCKET_TYPE"
 
+--- Validate the environment variable name. Case one of test fails this function will throw an error.
+--
+---@param env any the environment variable name
+---@param fname any the caller function
 local function validate_env_name(env, fname)
     -- env var cannot have white space
     assertion.whitespace(fname, messages.ERR_ENV_WHITE_SPACE, env)
@@ -18,24 +25,65 @@ local function validate_env_name(env, fname)
     assertion.True(fname, messages.ERR_ENV_EMPTY, env ~= "")
 end
 
+--- Validade de value of environment variable. This function assumes that this env var never
+--- will be nil and in case of one o more test fails this function will throw an error.
+---
+---@param env any the environment variable to be tested
+---@param fname any the caller function
 local function validate_env_value(env, fname)
+    -- the env var value cannot contains whitespace
     assertion.whitespace(fname, messages.ERR_SOCKET_WHITE_SPACE, env)
+
+    -- the env var value cannot be a empty string
     assertion.True(fname, messages.ERR_SOCKET_EMPTY_STRING, env ~= "")
-    assertion.contains(types:keys(), env, messages.ERR_SOCKET_UNKNOWN, fname)
+
+    -- the env var value needs to be contained in the typenames table
+    assertion.contains(typename, env, messages.ERR_SOCKET_UNKNOWN, fname)
 end
 
+--- Get the socket selected
+---
+--- @usage
+---     local selector = require "sselector"
+---     local socket = selector.get()
+---
+--- @return any - the socker selector
 function selector:get() return selector.socket end
 
-function selector:is_lua() return selector.env == typename.LUA end
+--- verify if the socket is a lua socket
+---
+--- @usage
+---     local selector = require "sselector"
+---     local test = selector.islua() -- it'll return true if it's lua socket
+---
+--- @return boolean
+function selector:islua() return selector.env == typename.LUA end
 
-function selector:is_cqueues() return selector.env == typename.CQUEUES end
+--- verify if the socket is a cqueues socket
+---
+--- @usage
+---     local selector = require "sselector"
+---     local test = selector.iscqueues() -- it'll return true if it's cequeues socket
+---
+--- @return boolean
+function selector:iscqueues() return selector.env == typename.CQUEUES end
 
-function selector:is_nginx() return selector.env == typename.NGINX end
+--- verify if the socket is a nginx socket
+---
+--- @usage
+---     local selector = require "sselector"
+---     local test = selector.isnginx() -- it'll return true if it's nginx socket
+---
+--- @return boolean
+function selector:isnginx() return selector.env == typename.NGINX end
 
-local selector_factory = {}
 
+--- get socket based in the environment variable selection
+---
+--- @param envname any
+--- @param fname any
+--- @return any
 local function from_env(envname, fname)
-    
     local t = table({})
 
     envname = envname or defaultenv and defaultenv
@@ -89,8 +137,8 @@ local function from_discovery()
     return t
 end
 
-function selector_factory.New(envname)
-    local fname = "New"
+local function builder(envname)
+    local fname = "builder"
 
     local t = from_env(envname, fname)
 
@@ -101,4 +149,4 @@ function selector_factory.New(envname)
     return selector
 end
 
-return selector_factory
+return builder()
