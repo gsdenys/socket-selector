@@ -1,0 +1,23 @@
+print_report = true
+statsfile = 'luacov.stats.out'
+reportfile = 'luacov.report.out'
+-- tick = true
+
+include = {
+    "amqp",
+}
+
+exclude = {
+    'spec/',
+    'docs/',
+    '/ptable/',
+    'net',
+    '/busted/',
+    '/luassert/',
+    '/pl/',
+    '/term/',
+    '/say/',
+    '/luarocks/',
+    'mediator',
+    'ptable'
+}

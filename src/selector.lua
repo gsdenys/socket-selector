@@ -45,10 +45,10 @@ end
 ---
 --- @usage
 ---     local selector = require "sselector"
----     local socket = selector.get()
+---     local socket = selector:get()
 ---
 --- @return any - the socker selector
-function selector:get() return selector.socket end
+function selector:get() return self.socket end
 
 --- verify if the socket is a lua socket
 ---
@@ -57,7 +57,7 @@ function selector:get() return selector.socket end
 ---     local test = selector.islua() -- it'll return true if it's lua socket
 ---
 --- @return boolean
-function selector:islua() return selector.env == typename.LUA end
+function selector:islua() return self.env == typename.LUA end
 
 --- verify if the socket is a cqueues socket
 ---
@@ -66,7 +66,7 @@ function selector:islua() return selector.env == typename.LUA end
 ---     local test = selector.iscqueues() -- it'll return true if it's cequeues socket
 ---
 --- @return boolean
-function selector:iscqueues() return selector.env == typename.CQUEUES end
+function selector:iscqueues() return self.env == typename.CQUEUES end
 
 --- verify if the socket is a nginx socket
 ---
@@ -75,7 +75,7 @@ function selector:iscqueues() return selector.env == typename.CQUEUES end
 ---     local test = selector.isnginx() -- it'll return true if it's nginx socket
 ---
 --- @return boolean
-function selector:isnginx() return selector.env == typename.NGINX end
+function selector:isnginx() return self.env == typename.NGINX end
 
 
 --- get socket based in the environment variable selection
