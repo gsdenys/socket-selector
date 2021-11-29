@@ -4,7 +4,7 @@ reportfile = 'luacov.report.out'
 -- tick = true
 
 include = {
-    "amqp",
+    "sslector",
 }
 
 exclude = {
