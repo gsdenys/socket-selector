@@ -4,7 +4,7 @@ local socket = require("socket")
 
 -- create a TCP socket and bind it to the local host, at any port
 local server = assert(socket.bind("*", 8000))
-local ip, port = server:getsockname()
+-- local ip, port = server:getsockname()
 
 -- print(string.format("Server %s %s", ip, port))
 
