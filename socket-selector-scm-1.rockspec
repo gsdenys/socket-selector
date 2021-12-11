@@ -9,16 +9,16 @@ description = {
     homepage = "*** please enter a project homepage ***",
     license = "*** please specify a license ***"
 }
-dependencies = {"lua >= 5.1", "power-table >= 1.0.1-1"}
+dependencies = {"lua >= 5.1", "power-table >= 1.0.1-1", "luasocket >= 3.0rc1-2"}
 build = {
     type = "builtin",
     modules = {
         ['selector'] = "src/selector.lua",
 
-        ['selector.ngx'] = "src/socket/ngx.lua",
+        ['selector.ngx'] = "src/socket/nginx.lua",
         ['selector.cqueues'] = "src/socket/cqueues.lua",
         ['selector.lua'] = "src/socket/lua.lua",
 
-        ['selector.env'] = "src/environment.lua"
+        -- ['selector.env'] = "src/environment.lua"
     }
 }

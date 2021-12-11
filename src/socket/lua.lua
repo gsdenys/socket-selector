@@ -1,19 +1,17 @@
 local table = require "ptable"
-local socket = require "socket"
+local socket = require("socket")
 
-local ctx = table({socket = socket, tcp = socket.tcp, sock = nil})
+local ctx = table({tcp = assert(socket.tcp())})
 
-function ctx:send(str) return self.socket.send(str) end
-
-function ctx:receive(int) return self.socket.receive(int) end
-
-local function new()
-    local sock, err = ctx.tcp()
-    if err ~= nil then error("teste", "ERR") end
-
-    ctx.sock = sock
+function ctx:connect(...)
+    local ok = self.tcp:connect(...)
+    if ok ~= 1 then error(ok) end
 
     return ctx
 end
 
-return new()
+function ctx:send(str) return self.tcp:send(str) end
+
+function ctx:receive(int) return self.tcp:receive(int) end
+
+return ctx

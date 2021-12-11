@@ -4,6 +4,10 @@
         "source",
         "description",
         "dependencies",
-        "build"
+        "build",
+        "describe",
+        "it",
+        "setup",
+        "teardown"
     ]
 }
